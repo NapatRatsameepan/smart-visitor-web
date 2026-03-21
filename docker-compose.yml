@@ -1,0 +1,17 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: smart_visitor_web
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app               
+      - /app/node_modules      
+      - /app/.next             
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://localhost:8000 
+    stdin_open: true        
+    tty: true                
