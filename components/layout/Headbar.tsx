@@ -1,8 +1,9 @@
 "use client"
 
-import React from "react"
+import React, { useState } from "react"
 import { Building2, Calendar, Search, Globe, ChevronDown, ShieldHalf } from "lucide-react"
 import { useLanguageStore } from "@/store/useLanguageStore"
+import { ProfileSettingsModal } from "./ProfileSettingsModal"
 
 interface HeadbarProps {
   title: string;
@@ -12,17 +13,17 @@ interface HeadbarProps {
 
 export function Headbar({ title, showFactoryFilter = true, showDateFilter = true }: HeadbarProps) {
   const { lang, setLang, isTH } = useLanguageStore();
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-40 flex h-24 w-full items-center bg-white">
       {/* Logo Area - Fixed width to match Sidebar */}
       <div className="w-28 flex items-center justify-center shrink-0 bg-white">
-        <div className="flex flex-col items-center justify-center border border-blue-200 rounded-md p-1 min-w-[70px] text-center bg-white">
-          <ShieldHalf className="w-8 h-8 text-slate-800" />
-          <span className="text-[9px] font-bold text-slate-900 mt-1 leading-tight tracking-tighter">
-            SECURITY GUARD<br />SMART VISITOR
-          </span>
-        </div>
+        <img 
+          src="/logo.svg" 
+          alt="Security Guard Smart Visitor" 
+          className="w-[70px] h-auto object-contain cursor-pointer" 
+        />
       </div>
 
       {/* Main Header Content */}
@@ -69,9 +70,16 @@ export function Headbar({ title, showFactoryFilter = true, showDateFilter = true
         </button>
 
         {/* User Avatar */}
-        <div className="w-10 h-10 rounded-full bg-slate-200 ml-2" />
+        <button 
+          onClick={() => setIsProfileModalOpen(true)}
+          className="w-10 h-10 rounded-full bg-slate-200 ml-2 hover:ring-2 hover:ring-blue-500 transition-all focus:outline-none" 
+        />
       </div>
     </div>
+    <ProfileSettingsModal 
+      isOpen={isProfileModalOpen} 
+      onClose={() => setIsProfileModalOpen(false)} 
+    />
   </header>
   )
 }

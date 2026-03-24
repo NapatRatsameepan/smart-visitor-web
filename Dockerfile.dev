@@ -1,0 +1,19 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Add dependencies needed for native modules if any (optional but good practice)
+RUN apk add --no-cache libc6-compat
+
+# Install dependencies based on the preferred package manager
+COPY package.json package-lock.json* ./
+RUN npm install
+
+# Copy the rest of the application code
+COPY . .
+
+# Expose the standard Next.js port
+EXPOSE 3000
+
+# Start the application in development mode
+CMD ["npm", "run", "dev"]
