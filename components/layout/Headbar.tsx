@@ -16,10 +16,10 @@ export function Headbar({ title, showFactoryFilter = true, showDateFilter = true
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 flex flex-col md:flex-row min-h-[6rem] h-auto w-full items-center bg-white border-b border-slate-100 shadow-sm md:shadow-none">
+    <header className="sticky top-0 z-40 flex flex-col md:flex-row min-h-[6rem] h-auto w-full items-center bg-white shadow-sm md:shadow-none">
       
       {/* Mobile Top Row & Desktop Logo */}
-      <div className="flex w-full md:w-auto items-center justify-between md:justify-start border-b border-slate-100 md:border-none">
+      <div className="flex w-full md:w-auto items-center justify-between md:justify-start md:border-none">
         {/* Logo Area */}
         <div className="w-20 md:w-28 h-16 md:h-24 flex items-center justify-center shrink-0 bg-white ml-2 md:ml-0">
           <img 
