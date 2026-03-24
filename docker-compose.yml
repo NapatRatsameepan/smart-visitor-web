@@ -1,17 +1,21 @@
+version: '3.8'
+
 services:
   web:
+    container_name: smart-visitor-web-dev
     build:
       context: .
-      dockerfile: Dockerfile
-    container_name: smart_visitor_web
+      dockerfile: Dockerfile.dev
     ports:
       - "3000:3000"
     volumes:
-      - .:/app               
-      - /app/node_modules      
-      - /app/.next             
+      # Mount local directory to /app for live reloading
+      - .:/app
+      # Create anonymous volumes for node_modules and .next so they don't get overwritten by the host machine
+      - /app/node_modules
+      - /app/.next
     environment:
       - NODE_ENV=development
-      - NEXT_PUBLIC_API_URL=http://localhost:8000 
-    stdin_open: true        
-    tty: true                
+      # These flags help ensure that hot-reloading works properly across Docker volumes, especially on Windows
+      - WATCHPACK_POLLING=true
+      - CHOKIDAR_USEPOLLING=true
