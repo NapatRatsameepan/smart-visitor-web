@@ -20,7 +20,7 @@ export default function Dashboard() {
         <Sidebar />
 
         {/* Dashboard Content */}
-        <main className="flex-1 ml-28 p-8 overflow-y-auto">
+        <main className="flex-1 ml-0 md:ml-28 p-4 md:p-8 pb-24 md:pb-8 overflow-y-auto">
           {/* Section Title */}
           <div className="flex items-center gap-2 mb-6 text-slate-800 font-semibold px-2">
             <Clock className="w-5 h-5" />

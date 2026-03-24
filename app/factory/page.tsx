@@ -27,7 +27,7 @@ export default function FactoryPage() {
       <div className="flex flex-1">
         <Sidebar />
 
-        <main className="flex-1 ml-28 p-8 overflow-y-auto">
+        <main className="flex-1 ml-0 md:ml-28 p-4 md:p-8 pb-24 md:pb-8 overflow-y-auto">
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Left: Bar Chart */}
