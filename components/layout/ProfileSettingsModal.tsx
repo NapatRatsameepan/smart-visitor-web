@@ -23,7 +23,7 @@ export function ProfileSettingsModal({ isOpen, onClose }: ProfileSettingsModalPr
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm sm:p-6">
+    <div className="fixed inset-0 z-[1100] flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm sm:p-6">
       <div className="relative w-full max-w-md max-h-full flex flex-col items-center">
         
         {/* Card: Change Profile Picture */}

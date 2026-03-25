@@ -7,12 +7,42 @@ import { ProfileSettingsModal } from "./ProfileSettingsModal"
 import Link from "next/link"
 
 interface HeadbarProps {
-  breadcrumbs: { label: string; href?: string }[];
+  breadcrumbs?: { label: string; href?: string }[];
+  title?: string;
+  showFactoryFilter?: boolean;
+  showDateFilter?: boolean;
 }
 
-export function Headbar({ breadcrumbs }: HeadbarProps) {
+export function Headbar({ breadcrumbs, title }: HeadbarProps) {
   const { lang, setLang, isTH } = useLanguageStore();
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+
+  const renderBreadcrumbs = (items: { label: string; href?: string }[] | undefined, isMobile: boolean) => {
+    if (items && items.length > 0) {
+      return items.map((bc, idx) => (
+        <React.Fragment key={idx}>
+          {idx > 0 && (
+            isMobile ? (
+              <span className="text-slate-300 font-normal mx-0.5">/</span>
+            ) : (
+              <ChevronRight className="w-5 h-5 text-slate-300 mx-1" />
+            )
+          )}
+          {bc.href ? (
+            <Link href={bc.href} className="hover:text-blue-600 transition-colors">{bc.label}</Link>
+          ) : (
+            <span className={idx === items.length - 1 ? "text-slate-900" : "text-slate-500"}>{bc.label}</span>
+          )}
+        </React.Fragment>
+      ));
+    }
+    
+    if (title) {
+      return <span className="text-slate-900">{title}</span>;
+    }
+
+    return null;
+  };
 
   return (
     <header className="sticky top-0 z-30 flex flex-col md:flex-row min-h-[5rem] h-auto w-full items-center bg-white shadow-sm md:shadow-none dynamic-pl border-b border-slate-100">
@@ -20,18 +50,9 @@ export function Headbar({ breadcrumbs }: HeadbarProps) {
       {/* Mobile Top Row */}
       <div className="flex w-full md:w-auto items-center justify-between md:justify-start md:border-none px-4 md:px-8 py-4 md:py-0">
         
-        {/* Breadcrumbs for Mobile */}
+        {/* Breadcrumbs/Title for Mobile */}
         <div className="md:hidden flex flex-wrap items-center gap-1.5 text-lg font-bold text-slate-900">
-          {breadcrumbs.map((bc, idx) => (
-            <React.Fragment key={idx}>
-              {idx > 0 && <span className="text-slate-300 font-normal mx-0.5">/</span>}
-              {bc.href ? (
-                <Link href={bc.href} className="hover:text-blue-600 transition-colors">{bc.label}</Link>
-              ) : (
-                <span className={idx === breadcrumbs.length - 1 ? "text-slate-900" : "text-slate-500"}>{bc.label}</span>
-              )}
-            </React.Fragment>
-          ))}
+          {renderBreadcrumbs(breadcrumbs, true)}
         </div>
 
         {/* Mobile User Avatar & Lang */}
@@ -55,16 +76,7 @@ export function Headbar({ breadcrumbs }: HeadbarProps) {
         
         {/* Desktop Breadcrumbs */}
         <div className="flex items-center gap-2 text-xl font-bold text-slate-800 tracking-tight">
-          {breadcrumbs.map((bc, idx) => (
-            <React.Fragment key={idx}>
-              {idx > 0 && <ChevronRight className="w-5 h-5 text-slate-300 mx-1" />}
-              {bc.href ? (
-                <Link href={bc.href} className="hover:text-blue-600 transition-colors">{bc.label}</Link>
-              ) : (
-                <span className={idx === breadcrumbs.length - 1 ? "text-slate-900" : "text-slate-500"}>{bc.label}</span>
-              )}
-            </React.Fragment>
-          ))}
+          {renderBreadcrumbs(breadcrumbs, false)}
         </div>
 
         {/* Right section: Search and Actions */}
