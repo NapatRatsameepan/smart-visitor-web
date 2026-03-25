@@ -1,54 +1,41 @@
 "use client"
 
 import React, { useState } from "react"
-import { Building2, Calendar, Search, Globe, ChevronDown } from "lucide-react"
+import { Search, Globe, ChevronRight } from "lucide-react"
 import { useLanguageStore } from "@/store/useLanguageStore"
-import { useAuthStore } from "@/store/useAuthStore"
 import { ProfileSettingsModal } from "./ProfileSettingsModal"
+import Link from "next/link"
 
 interface HeadbarProps {
-  title: string;
-  showFactoryFilter?: boolean;
-  showDateFilter?: boolean;
+  breadcrumbs: { label: string; href?: string }[];
 }
 
-export function Headbar({ title, showFactoryFilter = true, showDateFilter = true }: HeadbarProps) {
+export function Headbar({ breadcrumbs }: HeadbarProps) {
   const { lang, setLang, isTH } = useLanguageStore();
-  const { role } = useAuthStore();
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 flex flex-col md:flex-row min-h-[6rem] h-auto w-full items-center bg-white shadow-sm md:shadow-none dynamic-pl">
+    <header className="sticky top-0 z-30 flex flex-col md:flex-row min-h-[5rem] h-auto w-full items-center bg-white shadow-sm md:shadow-none dynamic-pl border-b border-slate-100">
       
-      {/* Mobile Top Row & Desktop Logo */}
-      <div className="flex w-full md:w-auto items-center justify-between md:justify-start md:border-none pl-2 md:pl-6">
+      {/* Mobile Top Row */}
+      <div className="flex w-full md:w-auto items-center justify-between md:justify-start md:border-none px-4 md:px-8 py-4 md:py-0">
         
-        {/* Desktop Logo Area (Shows alongside dynamic-pl pushing it past Sidebar) */}
-        <div className="hidden md:flex flex-col shrink-0">
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-lg text-slate-900 leading-tight">SmartVisitor</span>
-          </div>
-          {role === 'SUPER_ADMIN' && (
-            <span className="bg-blue-600 text-white text-[10px] font-semibold px-2 py-0.5 rounded-full w-max mt-0.5 shadow-sm shadow-blue-200">
-              Super Admin
-            </span>
-          )}
+        {/* Breadcrumbs for Mobile */}
+        <div className="md:hidden flex flex-wrap items-center gap-1.5 text-lg font-bold text-slate-900">
+          {breadcrumbs.map((bc, idx) => (
+            <React.Fragment key={idx}>
+              {idx > 0 && <span className="text-slate-300 font-normal mx-0.5">/</span>}
+              {bc.href ? (
+                <Link href={bc.href} className="hover:text-blue-600 transition-colors">{bc.label}</Link>
+              ) : (
+                <span className={idx === breadcrumbs.length - 1 ? "text-slate-900" : "text-slate-500"}>{bc.label}</span>
+              )}
+            </React.Fragment>
+          ))}
         </div>
-
-        {/* Mobile Logo Area (Hidden on Desktop, shown on Mobile) */}
-        <div className="w-20 md:w-28 h-16 md:h-24 flex md:hidden items-center justify-center shrink-0 bg-white ml-2 md:ml-0">
-          <img 
-            src="/logo.svg" 
-            alt="Security Guard Smart Visitor" 
-            className="w-[50px] md:w-[70px] h-auto object-contain cursor-pointer" 
-          />
-        </div>
-
-        {/* Mobile Title */}
-        <h1 className="md:hidden text-xl font-bold text-slate-900 mr-auto ml-2">{title}</h1>
 
         {/* Mobile User Avatar & Lang */}
-        <div className="flex md:hidden items-center gap-2 pr-4">
+        <div className="flex md:hidden items-center gap-2 ml-auto">
           <button 
             onClick={() => setLang(isTH ? "EN" : "TH")}
             className="flex items-center p-2 text-slate-600 rounded-full"
@@ -58,54 +45,43 @@ export function Headbar({ title, showFactoryFilter = true, showDateFilter = true
           </button>
           <button 
             onClick={() => setIsProfileModalOpen(true)}
-            className="w-8 h-8 rounded-full bg-slate-200" 
+            className="w-10 h-10 rounded-full bg-slate-200" 
           />
         </div>
       </div>
 
       {/* Main Header Content */}
-      <div className="flex-1 flex flex-col md:flex-row items-start md:items-center justify-between px-4 md:px-8 w-full pt-3 pb-3 md:py-0 gap-3 md:gap-0">
+      <div className="hidden md:flex flex-1 items-center justify-between px-8 w-full">
         
-        {/* Desktop Title */}
-        <h1 className="hidden md:block text-3xl font-bold text-slate-900">{title}</h1>
+        {/* Desktop Breadcrumbs */}
+        <div className="flex items-center gap-2 text-xl font-bold text-slate-800 tracking-tight">
+          {breadcrumbs.map((bc, idx) => (
+            <React.Fragment key={idx}>
+              {idx > 0 && <ChevronRight className="w-5 h-5 text-slate-300 mx-1" />}
+              {bc.href ? (
+                <Link href={bc.href} className="hover:text-blue-600 transition-colors">{bc.label}</Link>
+              ) : (
+                <span className={idx === breadcrumbs.length - 1 ? "text-slate-900" : "text-slate-500"}>{bc.label}</span>
+              )}
+            </React.Fragment>
+          ))}
+        </div>
 
-        {/* Right section: Filters and Actions */}
-        <div className="flex flex-row flex-wrap md:flex-nowrap items-center gap-2 md:gap-4 text-sm w-full md:w-auto">
+        {/* Right section: Search and Actions */}
+        <div className="flex flex-row items-center gap-4 text-sm py-4">
           
-          {/* Factory Dropdown */}
-          {showFactoryFilter && role === 'SUPER_ADMIN' && (
-            <button className="flex flex-1 md:flex-none justify-between md:justify-start items-center gap-2 border border-slate-300 rounded-full h-10 px-3 md:px-4 bg-white text-slate-700 hover:bg-slate-50 transition-colors whitespace-nowrap">
-              <div className="flex items-center gap-2">
-                <Building2 className="w-4 h-4 text-slate-500 shrink-0" />
-                <span className="font-medium mr-1 md:mr-2">Factory</span>
-              </div>
-              <ChevronDown className="w-4 h-4 text-slate-500 shrink-0" />
-            </button>
-          )}
-
-          {/* Date Dropdown */}
-          {showDateFilter && (
-            <button className="flex flex-1 md:flex-none justify-between md:justify-start items-center gap-2 border border-slate-300 rounded-full h-10 px-3 md:px-4 bg-white text-slate-700 hover:bg-slate-50 transition-colors whitespace-nowrap">
-              <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-slate-500 shrink-0" />
-                <span className="font-medium mr-1 md:mr-2">Month - Month</span>
-              </div>
-              <ChevronDown className="w-4 h-4 text-slate-500 shrink-0" />
-            </button>
-          )}
-
           {/* Search Input */}
-          <div className="relative flex items-center w-full md:w-56 mt-1 md:mt-0">
+          <div className="relative flex items-center w-64">
             <Search className="absolute left-3 w-4 h-4 text-slate-400" />
             <input
               type="text"
               placeholder={isTH ? "ค้นหาที่นี่..." : "Search here..."}
-              className="h-10 pl-9 pr-4 rounded-full border border-slate-300 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+              className="h-10 pl-9 pr-4 rounded-full border border-slate-300 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full transition-shadow"
             />
           </div>
 
           {/* Desktop User Avatar & Lang */}
-          <div className="hidden md:flex items-center gap-2 ml-auto md:ml-2">
+          <div className="flex items-center gap-2 ml-2">
             <button 
               onClick={() => setLang(isTH ? "EN" : "TH")}
               className="flex items-center gap-1.5 p-2 px-3 text-slate-600 hover:bg-slate-100 rounded-full transition-colors"
