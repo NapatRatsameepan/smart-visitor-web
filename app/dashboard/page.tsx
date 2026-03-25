@@ -8,7 +8,7 @@ import { useDashboardFilterStore } from "@/store/useDashboardFilterStore"
 import { regions, provinces, factories, getProvincesByRegion, getFactoriesByProvince, getFactoriesByRegion, getFilteredFactories } from "@/lib/mockFactories"
 import { Sidebar } from "@/components/layout/Sidebar"
 import { Headbar } from "@/components/layout/Headbar"
-import { Clock, Map, MapPin, Building2, ChevronDown, Calendar } from "lucide-react"
+import { Clock, Map, MapPin, Building2, ChevronDown, Calendar, Users, TrendingUp, BarChart3, Activity } from "lucide-react"
 
 // Dynamic import for Leaflet map (no SSR)
 const FactoryMap = dynamic(() => import("@/components/dashboard/FactoryMap"), {
@@ -161,53 +161,95 @@ export default function Dashboard() {
           </div>
 
           <div className="flex flex-col gap-6 max-w-7xl mx-auto">
-            {/* Top Stats Cards Row */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {/* Card 1: Total Today */}
-              <div className="bg-[#0f172a] text-white rounded-2xl p-5 flex items-center justify-between shadow-sm">
-                <div className="flex flex-col">
-                  <span className="text-lg font-medium mb-1">{isTH ? "ทั้งหมดวันนี้" : "Total Today"}</span>
-                  <span className="text-xs text-slate-400">{isTH ? "ล่าสุด" : "Latest"}<br />18/08/2568 16:30 {isTH ? "น." : ""}</span>
+            {/* Top Stats Cards Row — Sentinel-style */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {/* Card 1: Total Visitors */}
+              <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex flex-col items-center text-center gap-3">
+                <div className="flex items-center justify-between w-full">
+                  <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center">
+                    <Users className="w-6 h-6 text-blue-600" />
+                  </div>
+                  <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">+12%</span>
                 </div>
-                <div className="text-5xl font-bold tracking-tight">{Math.floor(12 * multiplier)}</div>
+                <div className="w-full text-left">
+                  <span className="text-xs font-medium text-slate-500 uppercase tracking-wider">{isTH ? "ผู้เยี่ยมชมทั้งหมด" : "TOTAL VISITORS"}</span>
+                  <div className="text-3xl font-bold text-slate-900 tracking-tight mt-1">{Math.floor(12842 * multiplier).toLocaleString()}</div>
+                </div>
               </div>
 
-              {/* Card 2: Max Peak */}
-              <div className="bg-[#0f172a] text-white rounded-2xl p-5 flex items-center justify-between shadow-sm">
-                <div className="flex flex-col">
-                  <span className="text-lg font-medium mb-1">{isTH ? "ยอดสูงสุด" : "Max Peak"}</span>
-                  <span className="text-xs text-slate-400">{isTH ? "วันที่" : "Date:"}<br />18/08/2568</span>
+              {/* Card 2: Max Hourly */}
+              <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex flex-col items-center text-center gap-3">
+                <div className="flex items-center justify-between w-full">
+                  <div className="w-12 h-12 rounded-full bg-orange-50 flex items-center justify-center">
+                    <TrendingUp className="w-6 h-6 text-orange-500" />
+                  </div>
+                  <span className="text-xs font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full">{isTH ? "พีคไทม์" : "PEAK TIME"}</span>
                 </div>
-                <div className="text-5xl font-bold tracking-tight">{Math.floor(24 * multiplier)}</div>
+                <div className="w-full text-left">
+                  <span className="text-xs font-medium text-slate-500 uppercase tracking-wider">{isTH ? "สูงสุดรายชั่วโมง" : "MAX HOURLY"}</span>
+                  <div className="text-3xl font-bold text-slate-900 tracking-tight mt-1">{Math.floor(1402 * multiplier).toLocaleString()}</div>
+                </div>
               </div>
 
-              {/* Card 3: Average */}
-              <div className="bg-[#0f172a] text-white rounded-2xl p-5 flex items-center justify-between shadow-sm">
-                <div className="flex flex-col justify-center h-full">
-                  <span className="text-lg font-medium">{isTH ? "ค่าเฉลี่ย" : "Average"}</span>
+              {/* Card 3: Avg Flow */}
+              <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex flex-col items-center text-center gap-3">
+                <div className="flex items-center justify-between w-full">
+                  <div className="w-12 h-12 rounded-full bg-purple-50 flex items-center justify-center">
+                    <BarChart3 className="w-6 h-6 text-purple-500" />
+                  </div>
+                  <span className="text-xs font-semibold text-red-500 bg-red-50 px-2 py-0.5 rounded-full">-2%</span>
                 </div>
-                <div className="text-5xl font-bold tracking-tight">{Math.floor(32 * multiplier)}</div>
+                <div className="w-full text-left">
+                  <span className="text-xs font-medium text-slate-500 uppercase tracking-wider">{isTH ? "ค่าเฉลี่ย" : "AVG FLOW"}</span>
+                  <div className="flex items-baseline gap-1 mt-1">
+                    <span className="text-3xl font-bold text-slate-900 tracking-tight">{Math.floor(842 * multiplier)}</span>
+                    <span className="text-sm text-slate-400 font-medium">/{isTH ? "ชม." : "hr"}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 4: Active Nodes */}
+              <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex flex-col items-center text-center gap-3">
+                <div className="flex items-center justify-between w-full">
+                  <div className="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center">
+                    <Activity className="w-6 h-6 text-emerald-500" />
+                  </div>
+                  <span className="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full animate-pulse">{isTH ? "สด" : "LIVE"}</span>
+                </div>
+                <div className="w-full text-left">
+                  <span className="text-xs font-medium text-slate-500 uppercase tracking-wider">{isTH ? "โรงงานออนไลน์" : "ACTIVE NODES"}</span>
+                  <div className="flex items-baseline gap-1 mt-1">
+                    <span className="text-3xl font-bold text-slate-900 tracking-tight">{factoryCount}</span>
+                    <span className="text-sm text-slate-400 font-medium">/ {totalFactories}</span>
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* Second Stats Cards Row */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Card 4: Max Dept */}
-              <div className="bg-[#0f172a] text-white rounded-2xl p-5 flex items-center justify-between shadow-sm">
-                <div className="flex flex-col">
-                  <span className="text-sm text-slate-400 mb-1">{isTH ? "แผนกเยี่ยมชมสูงสุด" : "Max Department Visit"}</span>
-                  <span className="text-xl font-bold">{isTH ? "ฝ่ายขาย" : "Sales"}</span>
+              {/* Card 5: Max Dept */}
+              <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-sky-50 flex items-center justify-center shrink-0">
+                  <Building2 className="w-6 h-6 text-sky-500" />
                 </div>
-                <div className="text-5xl font-bold tracking-tight">{Math.floor(1024 * multiplier).toLocaleString()}</div>
+                <div className="flex-1 min-w-0">
+                  <span className="text-xs font-medium text-slate-500 uppercase tracking-wider">{isTH ? "แผนกเยี่ยมชมสูงสุด" : "MAX DEPARTMENT VISIT"}</span>
+                  <div className="text-lg font-bold text-slate-900 truncate">{isTH ? "ฝ่ายขาย" : "Sales"}</div>
+                </div>
+                <div className="text-3xl font-bold text-slate-900 tracking-tight">{Math.floor(1024 * multiplier).toLocaleString()}</div>
               </div>
 
-              {/* Card 5: Max Mission */}
-              <div className="bg-[#0f172a] text-white rounded-2xl p-5 flex items-center justify-between shadow-sm">
-                <div className="flex flex-col">
-                  <span className="text-sm text-slate-400 mb-1">{isTH ? "ภารกิจเยี่ยมชมสูงสุด" : "Max Mission Visit"}</span>
-                  <span className="text-xl font-bold">{isTH ? "วางบิล" : "Billing"}</span>
+              {/* Card 6: Max Mission */}
+              <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center shrink-0">
+                  <Clock className="w-6 h-6 text-amber-500" />
                 </div>
-                <div className="text-5xl font-bold tracking-tight">{Math.floor(512 * multiplier)}</div>
+                <div className="flex-1 min-w-0">
+                  <span className="text-xs font-medium text-slate-500 uppercase tracking-wider">{isTH ? "ภารกิจเยี่ยมชมสูงสุด" : "MAX MISSION VISIT"}</span>
+                  <div className="text-lg font-bold text-slate-900 truncate">{isTH ? "วางบิล" : "Billing"}</div>
+                </div>
+                <div className="text-3xl font-bold text-slate-900 tracking-tight">{Math.floor(512 * multiplier)}</div>
               </div>
             </div>
 
