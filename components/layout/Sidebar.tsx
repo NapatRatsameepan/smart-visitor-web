@@ -58,7 +58,7 @@ export function Sidebar() {
 
       {/* Desktop/Tablet Sidebar */}
       <aside 
-        className={`hidden md:flex fixed left-0 top-0 z-50 h-screen flex-col bg-[#f4f5f7] border-r border-slate-200 transition-all duration-300 ${isExpanded ? 'w-64' : 'w-20'}`}
+        className={`hidden md:flex fixed left-0 top-0 z-[1200] h-screen flex-col bg-[#f4f5f7] border-r border-slate-200 transition-all duration-300 ${isExpanded ? 'w-64' : 'w-20'}`}
       >
         
         {/* Top Toggle Area */}

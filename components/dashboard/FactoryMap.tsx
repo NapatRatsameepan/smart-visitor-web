@@ -58,7 +58,7 @@ export default function FactoryMap() {
   )
 
   return (
-    <div className="w-full h-full rounded-2xl overflow-hidden" style={{ minHeight: "300px" }}>
+    <div className="w-full h-full rounded-2xl overflow-hidden relative z-0" style={{ minHeight: "300px" }}>
       <MapContainer
         center={THAILAND_CENTER}
         zoom={THAILAND_ZOOM}
