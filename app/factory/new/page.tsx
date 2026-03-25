@@ -31,7 +31,7 @@ export default function NewFactoryPage() {
       <div className="flex flex-1">
         <Sidebar />
 
-        <main className="flex-1 ml-28 p-8 overflow-y-auto">
+        <main className="flex-1 ml-0 dynamic-ml p-8 overflow-y-auto">
           <div className="max-w-2xl mx-auto">
             {/* Section Title */}
             <div className="flex items-center gap-2 mb-8 text-slate-800 font-semibold">

@@ -4,13 +4,21 @@ import React from 'react';
 import { X, Upload } from 'lucide-react';
 import { useLanguageStore } from '@/store/useLanguageStore';
 
+import { useAuthStore } from '@/store/useAuthStore';
+
 interface ProfileSettingsModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+const mockFactories = [
+  { id: '1', nameTH: 'โรงงาน A (กรุงเทพฯ)', nameEN: 'Factory A (Bangkok)' },
+  { id: '2', nameTH: 'โรงงาน B (ระยอง)', nameEN: 'Factory B (Rayong)' },
+];
+
 export function ProfileSettingsModal({ isOpen, onClose }: ProfileSettingsModalProps) {
   const { isTH } = useLanguageStore();
+  const { role, setRole, factoryId, setFactoryId } = useAuthStore();
 
   if (!isOpen) return null;
 
@@ -32,13 +40,57 @@ export function ProfileSettingsModal({ isOpen, onClose }: ProfileSettingsModalPr
             {isTH ? "เปลี่ยนรูปประจำตัว" : "Change Profile Picture"}
           </h2>
           
-          <div className="flex-1 flex flex-col items-center justify-center min-h-[250px] space-y-8 w-full">
-            <div className="relative group cursor-pointer w-56 h-56 md:w-64 md:h-64">
+          <div className="flex-1 flex flex-col items-center justify-center min-h-[200px] space-y-8 w-full">
+            <div className="relative group cursor-pointer w-48 h-48 md:w-56 md:h-56">
               <div className="w-full h-full rounded-full bg-[#d1d5db] overflow-hidden flex items-center justify-center shadow-inner transition-transform group-hover:scale-[1.02]">
                 {/* No initial image, matching original dark gray/light gray circle */}
               </div>
               <div className="absolute inset-0 rounded-full bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
                  <Upload className="w-8 h-8 text-white" />
+              </div>
+            </div>
+
+            {/* Mock Role Switcher (For Development/Testing) */}
+            <div className="w-full p-4 bg-slate-50 rounded-2xl border border-slate-200 mt-6">
+              <h3 className="text-sm font-semibold text-slate-800 mb-4">{isTH ? "จำลองบทบาทผู้ใช้งาน (Test Mock)" : "Simulate User Role (Test Mock)"}</h3>
+              
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-slate-600">{isTH ? "ระดับผู้ดูแลระบบ" : "Admin Level"}</span>
+                  <select 
+                    value={role}
+                    onChange={(e) => {
+                      const newRole = e.target.value as 'SUPER_ADMIN' | 'ADMIN';
+                      setRole(newRole);
+                      if (newRole === 'SUPER_ADMIN') {
+                        setFactoryId(null);
+                      } else if (!factoryId && mockFactories.length > 0) {
+                        setFactoryId(mockFactories[0].id);
+                      }
+                    }}
+                    className="h-9 px-3 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-slate-400 bg-white"
+                  >
+                    <option value="SUPER_ADMIN">{isTH ? "Super Admin (ทั้งหมด)" : "Super Admin (All)"}</option>
+                    <option value="ADMIN">{isTH ? "Admin (เฉพาะโรงงาน)" : "Admin (Specific Factory)"}</option>
+                  </select>
+                </div>
+
+                {role === 'ADMIN' && (
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-slate-600">{isTH ? "พื้นที่รับผิดชอบ" : "Assigned Factory"}</span>
+                    <select 
+                      value={factoryId || ''}
+                      onChange={(e) => setFactoryId(e.target.value)}
+                      className="h-9 px-3 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-slate-400 bg-white max-w-[200px]"
+                    >
+                      {mockFactories.map(factory => (
+                        <option key={factory.id} value={factory.id}>
+                          {isTH ? factory.nameTH : factory.nameEN}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
               </div>
             </div>
           </div>

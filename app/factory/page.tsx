@@ -10,11 +10,41 @@ import { Clock, FileText, Plus } from "lucide-react"
 const mockFactories = [
   { id: 1, name: "โรงงานมิตรผล ชลบุรี", guards: 2 },
   { id: 2, name: "โรงงานมิตรผล นครราชสีมา", guards: 1 },
+  { id: 3, name: "โรงงานมิตรผล อยุธยา", guards: 3 },
+  { id: 4, name: "โรงงานมิตรผล สุพรรณบุรี", guards: 2 },
+  { id: 5, name: "โรงงานมิตรผล กาญจนบุรี", guards: 1 },
+  { id: 6, name: "โรงงานมิตรผล นครปฐม", guards: 2 },
+  { id: 7, name: "โรงงานมิตรผล ขอนแก่น", guards: 4 },
+  { id: 8, name: "โรงงานมิตรผล อุบลราชธานี", guards: 2 },
+  { id: 9, name: "โรงงานมิตรผล ลำพูน", guards: 1 },
+  { id: 10, name: "โรงงานมิตรผล เชียงราย", guards: 3 },
+  { id: 11, name: "โรงงานมิตรผล พิษณุโลก", guards: 2 },
+  { id: 12, name: "โรงงานมิตรผล นครสวรรค์", guards: 1 },
+  { id: 13, name: "โรงงานมิตรผล ราชบุรี", guards: 2 },
+  { id: 14, name: "โรงงานมิตรผล สุราษฎร์ธานี", guards: 3 },
+  { id: 15, name: "โรงงานมิตรผล นครศรีธรรมราช", guards: 2 },
+  { id: 16, name: "โรงงานมิตรผล สงขลา", guards: 4 },
+  { id: 17, name: "โรงงานมิตรผล กำแพงเพชร", guards: 1 },
 ]
 
 const chartData = [
   { name: "โรงงานมิตรผล ชลบุรี", value: 85 },
   { name: "โรงงานมิตรผล", value: 65 },
+  { name: "โรงงานมิตรผล อยุธยา", value: 78 },
+  { name: "โรงงานมิตรผล สุพรรณบุรี", value: 72 },
+  { name: "โรงงานมิตรผล กาญจนบุรี", value: 55 },
+  { name: "โรงงานมิตรผล นครปฐม", value: 90 },
+  { name: "โรงงานมิตรผล ขอนแก่น", value: 68 },
+  { name: "โรงงานมิตรผล อุบลราชธานี", value: 61 },
+  { name: "โรงงานมิตรผล ลำพูน", value: 47 },
+  { name: "โรงงานมิตรผล เชียงราย", value: 83 },
+  { name: "โรงงานมิตรผล พิษณุโลก", value: 74 },
+  { name: "โรงงานมิตรผล นครสวรรค์", value: 59 },
+  { name: "โรงงานมิตรผล ราชบุรี", value: 66 },
+  { name: "โรงงานมิตรผล สุราษฎร์ธานี", value: 80 },
+  { name: "โรงงานมิตรผล นครศรีธรรมราช", value: 71 },
+  { name: "โรงงานมิตรผล สงขลา", value: 88 },
+  { name: "โรงงานมิตรผล กำแพงเพชร", value: 43 },
 ]
 
 export default function FactoryPage() {
@@ -27,7 +57,7 @@ export default function FactoryPage() {
       <div className="flex flex-1">
         <Sidebar />
 
-        <main className="flex-1 ml-0 md:ml-28 p-4 md:p-8 pb-24 md:pb-8 overflow-y-auto">
+        <main className="flex-1 ml-0 dynamic-ml p-4 md:p-8 pb-24 md:pb-8 overflow-y-auto">
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Left: Bar Chart */}

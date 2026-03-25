@@ -2,17 +2,30 @@
 
 import React, { useState } from "react"
 import { useLanguageStore } from "@/store/useLanguageStore"
+import { useAuthStore } from "@/store/useAuthStore"
 import { Sidebar } from "@/components/layout/Sidebar"
 import { Headbar } from "@/components/layout/Headbar"
 import { Clock } from "lucide-react"
 
 export default function Dashboard() {
   const { isTH } = useLanguageStore()
+  const { role, factoryId } = useAuthStore()
+
+  const factoryNames: Record<string, { th: string, en: string }> = {
+    '1': { th: 'โรงงาน A (กรุงเทพฯ)', en: 'Factory A (Bangkok)' },
+    '2': { th: 'โรงงาน B (ระยอง)', en: 'Factory B (Rayong)' },
+  }
+
+  const factoryTitle = role === 'ADMIN' && factoryId && factoryNames[factoryId] 
+    ? ` - ${isTH ? factoryNames[factoryId].th : factoryNames[factoryId].en}`
+    : ''
+
+  const multiplier = role === 'SUPER_ADMIN' ? 1 : 0.4
 
   return (
     <div className="flex flex-col min-h-screen bg-white font-sans">
       {/* Top Headbar spans full width */}
-      <Headbar title={isTH ? 'แดชบอร์ด' : 'Dashboard'} />
+      <Headbar title={(isTH ? 'แดชบอร์ด' : 'Dashboard') + factoryTitle} />
 
       {/* Main Content Area Side-by-Side */}
       <div className="flex flex-1">
@@ -20,7 +33,7 @@ export default function Dashboard() {
         <Sidebar />
 
         {/* Dashboard Content */}
-        <main className="flex-1 ml-0 md:ml-28 p-4 md:p-8 pb-24 md:pb-8 overflow-y-auto">
+        <main className="flex-1 ml-0 dynamic-ml p-4 md:p-8 pb-24 md:pb-8 overflow-y-auto">
           {/* Section Title */}
           <div className="flex items-center gap-2 mb-6 text-slate-800 font-semibold px-2">
             <Clock className="w-5 h-5" />
@@ -36,7 +49,7 @@ export default function Dashboard() {
                   <span className="text-xl font-medium mb-1">{isTH ? "ทั้งหมดวันนี้" : "Total Today"}</span>
                   <span className="text-sm text-slate-400">{isTH ? "ล่าสุด" : "Latest"}<br />18/08/2568 16:30 {isTH ? "น." : ""}</span>
                 </div>
-                <div className="text-6xl font-bold tracking-tight">12</div>
+                <div className="text-6xl font-bold tracking-tight">{Math.floor(12 * multiplier)}</div>
               </div>
 
               {/* Card 2: Max Peak */}
@@ -45,7 +58,7 @@ export default function Dashboard() {
                   <span className="text-xl font-medium mb-1">{isTH ? "ยอดสูงสุด" : "Max Peak"}</span>
                   <span className="text-sm text-slate-400">{isTH ? "วันที่" : "Date:"}<br />18/08/2568</span>
                 </div>
-                <div className="text-6xl font-bold tracking-tight">24</div>
+                <div className="text-6xl font-bold tracking-tight">{Math.floor(24 * multiplier)}</div>
               </div>
 
               {/* Card 3: Average */}
@@ -53,7 +66,7 @@ export default function Dashboard() {
                 <div className="flex flex-col justify-center h-full">
                   <span className="text-xl font-medium">{isTH ? "ค่าเฉลี่ย" : "Average"}</span>
                 </div>
-                <div className="text-6xl font-bold tracking-tight">32</div>
+                <div className="text-6xl font-bold tracking-tight">{Math.floor(32 * multiplier)}</div>
               </div>
             </div>
 
@@ -65,7 +78,7 @@ export default function Dashboard() {
                   <span className="text-sm text-slate-400 mb-1">{isTH ? "แผนกเยี่ยมชมสูงสุด" : "Max Department Visit"}</span>
                   <span className="text-2xl font-bold">{isTH ? "ฝ่ายขาย" : "Sales"}</span>
                 </div>
-                <div className="text-6xl font-bold tracking-tight">1,024</div>
+                <div className="text-6xl font-bold tracking-tight">{Math.floor(1024 * multiplier).toLocaleString()}</div>
               </div>
 
               {/* Card 5: Max Mission */}
@@ -74,7 +87,7 @@ export default function Dashboard() {
                   <span className="text-sm text-slate-400 mb-1">{isTH ? "ภารกิจเยี่ยมชมสูงสุด" : "Max Mission Visit"}</span>
                   <span className="text-2xl font-bold">{isTH ? "วางบิล" : "Billing"}</span>
                 </div>
-                <div className="text-6xl font-bold tracking-tight">512</div>
+                <div className="text-6xl font-bold tracking-tight">{Math.floor(512 * multiplier)}</div>
               </div>
             </div>
 
