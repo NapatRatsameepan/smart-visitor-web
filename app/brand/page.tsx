@@ -10,6 +10,26 @@ import { Clock, FileText, Plus } from "lucide-react"
 const mockBrands = [
   { id: 1, name: "Toyota", status: "active" },
   { id: 2, name: "Honda", status: "active" },
+  { id: 3, name: "Isuzu", status: "active" },
+  { id: 4, name: "Mitsubishi", status: "active" },
+  { id: 5, name: "Nissan", status: "active" },
+  { id: 6, name: "Ford", status: "active" },
+  { id: 7, name: "Mazda", status: "active" },
+  { id: 8, name: "Suzuki", status: "active" },
+  { id: 9, name: "Chevrolet", status: "inactive" },
+  { id: 10, name: "BMW", status: "active" },
+  { id: 11, name: "Mercedes-Benz", status: "active" },
+  { id: 12, name: "Volkswagen", status: "active" },
+  { id: 13, name: "Hyundai", status: "active" },
+  { id: 14, name: "Kia", status: "active" },
+  { id: 15, name: "Subaru", status: "inactive" },
+  { id: 16, name: "Lexus", status: "active" },
+  { id: 17, name: "Volvo", status: "active" },
+  { id: 18, name: "Audi", status: "inactive" },
+  { id: 19, name: "Jeep", status: "active" },
+  { id: 20, name: "MG", status: "active" },
+  { id: 21, name: "BYD", status: "active" },
+  { id: 22, name: "GWM", status: "active" },
 ]
 
 export default function BrandPage() {
@@ -22,7 +42,7 @@ export default function BrandPage() {
       <div className="flex flex-1">
         <Sidebar />
 
-        <main className="flex-1 ml-28 p-8 overflow-y-auto">
+        <main className="flex-1 ml-0 dynamic-ml p-8 overflow-y-auto">
           <div className="max-w-6xl mx-auto">
             {/* Section Header */}
             <div className="flex items-center justify-between mb-6">

@@ -5,38 +5,64 @@ import { useLanguageStore } from "@/store/useLanguageStore"
 import Link from "next/link"
 import { Sidebar } from "@/components/layout/Sidebar"
 import { Headbar } from "@/components/layout/Headbar"
+import { useAuthStore } from "@/store/useAuthStore"
 import { Clock, FileText, Plus } from "lucide-react"
 
-const mockAdmins = [
+const ALL_MOCK_ADMINS = [
   {
     id: 1,
     name: "นายสมชาย ใจดี",
     phone: "081-234-5678",
-    account: "Admin",
+    account: "Admin1",
     accountType: "แอดมินสูงสุด",
     status: "active",
+    factoryId: null, // Global
   },
   {
     id: 2,
-    name: "นายสมชาย ใจดี",
-    phone: "081-234-5678",
-    account: "Employee",
+    name: "นางสาวสมศรี ยินดี",
+    phone: "081-999-8888",
+    account: "Admin2",
     accountType: "แอดมิน",
     status: "active",
+    factoryId: '1', // Factory A
+  },
+  {
+    id: 3,
+    name: "นายสมศักดิ์ รักดี",
+    phone: "081-777-6666",
+    account: "Admin3",
+    accountType: "แอดมิน",
+    status: "active",
+    factoryId: '2', // Factory B
   },
 ]
 
 export default function AdminPage() {
   const { isTH } = useLanguageStore()
+  const { role, factoryId } = useAuthStore()
+
+  const factoryNames: Record<string, { th: string, en: string }> = {
+    '1': { th: 'โรงงาน A (กรุงเทพฯ)', en: 'Factory A (Bangkok)' },
+    '2': { th: 'โรงงาน B (ระยอง)', en: 'Factory B (Rayong)' },
+  }
+
+  const factoryTitle = role === 'ADMIN' && factoryId && factoryNames[factoryId] 
+    ? ` - ${isTH ? factoryNames[factoryId].th : factoryNames[factoryId].en}`
+    : ''
+
+  const visibleAdmins = role === 'SUPER_ADMIN' 
+    ? ALL_MOCK_ADMINS 
+    : ALL_MOCK_ADMINS.filter(admin => admin.factoryId === factoryId)
 
   return (
     <div className="flex flex-col min-h-screen bg-white font-sans">
-      <Headbar title={isTH ? "บัญชีผู้ดูแล" : "Admin Accounts"} />
+      <Headbar title={(isTH ? "บัญชีผู้ดูแล" : "Admin Accounts") + factoryTitle} />
 
       <div className="flex flex-1">
         <Sidebar />
 
-        <main className="flex-1 ml-28 p-8 overflow-y-auto">
+        <main className="flex-1 ml-0 dynamic-ml p-8 overflow-y-auto">
           <div className="max-w-6xl mx-auto">
             {/* Section Header */}
             <div className="flex items-center justify-between mb-6">
@@ -65,7 +91,7 @@ export default function AdminPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {mockAdmins.map((row) => (
+                  {visibleAdmins.map((row) => (
                     <tr key={row.id} className="border-b border-slate-100 hover:bg-slate-50 transition-colors">
                       <td className="py-4 px-3 text-center text-slate-600">{row.id}</td>
                       <td className="py-4 px-3 text-slate-600">
