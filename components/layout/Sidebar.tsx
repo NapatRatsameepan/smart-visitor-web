@@ -62,10 +62,23 @@ export function Sidebar() {
       >
         
         {/* Top Toggle Area */}
-        <div className="flex items-center px-6 h-22 shrink-0">
+        <div className={`flex items-center h-22 shrink-0 ${isExpanded ? 'px-6 justify-between' : 'justify-center'}`}>
+          {isExpanded && (
+            <div className="flex flex-col shrink-0 animate-in fade-in duration-300">
+              <div className="flex items-center gap-2">
+                <span className="font-bold text-xl text-slate-900 leading-tight tracking-tight">SmartVisitor</span>
+              </div>
+              {role === 'SUPER_ADMIN' && (
+                <span className="bg-blue-600 text-white text-[11px] font-semibold px-2.5 py-0.5 rounded-full w-max mt-0.5 shadow-sm shadow-blue-200 tracking-wide">
+                  Super Admin
+                </span>
+              )}
+            </div>
+          )}
+          
           <button 
             onClick={toggleSidebar}
-            className="p-1.5 -ml-1.5 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-slate-200 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-300"
+            className={`p-2 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-slate-200 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-300 ${isExpanded ? '-mr-2' : ''}`}
             aria-label="Toggle Sidebar"
           >
             <SidebarIcon className="w-6 h-6 shrink-0" />
