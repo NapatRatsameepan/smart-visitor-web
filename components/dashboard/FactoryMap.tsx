@@ -71,15 +71,39 @@ export default function FactoryMap() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <MapController filteredFactories={filteredFactories} />
-        {filteredFactories.map((factory) => (
-          <Marker key={factory.id} position={[factory.lat, factory.lng]}>
-            <Popup>
-              <div className="text-sm font-semibold">
-                {isTH ? factory.name : factory.nameEn}
+        {filteredFactories.map((factory) => {
+          const customIcon = L.divIcon({
+            className: 'custom-factory-marker',
+            html: `
+              <div style="width: 44px; height: 44px; background-color: white; border-radius: 50%; border: 3px solid ${factory.color}; box-shadow: 0 4px 10px rgba(0,0,0,0.2); overflow: hidden; display: flex; align-items: center; justify-content: center; position: relative;">
+                <img src="${factory.logoUrl}" alt="${factory.abbr}" style="width: 100%; height: 100%; object-fit: contain; padding: 4px; background-color: white;" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=${factory.abbr}&background=${factory.color.replace('#','')}&color=fff';" />
               </div>
-            </Popup>
-          </Marker>
-        ))}
+            `,
+            iconSize: [44, 44],
+            iconAnchor: [22, 22],
+            popupAnchor: [0, -22]
+          });
+
+          return (
+            <Marker 
+              key={factory.id} 
+              position={[factory.lat, factory.lng]}
+              icon={customIcon}
+            >
+              <Popup>
+                <div className="flex flex-col gap-1 min-w-[120px]">
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 rounded-full" style={{ backgroundColor: factory.color }}></div>
+                    <strong className="text-sm">{factory.abbr}</strong>
+                  </div>
+                  <div className="text-sm text-slate-600">
+                    {isTH ? factory.name : factory.nameEn}
+                  </div>
+                </div>
+              </Popup>
+            </Marker>
+          );
+        })}
       </MapContainer>
     </div>
   )
