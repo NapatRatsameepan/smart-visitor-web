@@ -18,6 +18,9 @@ export interface Factory {
   provinceId: string;
   lat: number;
   lng: number;
+  abbr: string;
+  color: string;
+  logoUrl: string;
 }
 
 export const regions: Region[] = [
@@ -44,22 +47,22 @@ export const provinces: Province[] = [
 
 export const factories: Factory[] = [
   // Central
-  { id: '1', name: 'โรงงาน กรุงเทพ A', nameEn: 'Bangkok Factory A', provinceId: '1', lat: 13.7563, lng: 100.5018 },
-  { id: '2', name: 'โรงงาน สมุทรปราการ', nameEn: 'Samut Prakan Factory', provinceId: '2', lat: 13.5990, lng: 100.5998 },
-  { id: '3', name: 'โรงงาน ปทุมธานี', nameEn: 'Pathum Thani Factory', provinceId: '3', lat: 14.0208, lng: 100.5250 },
+  { id: '1', name: 'SCG เคมิคอลส์ กรุงเทพฯ', nameEn: 'SCG Chemicals Bangkok', provinceId: '1', lat: 13.7563, lng: 100.5018, abbr: 'SCG', color: '#3b82f6', logoUrl: 'https://www.google.com/s2/favicons?domain=scg.com&sz=128' },
+  { id: '2', name: 'โตโยต้า มอเตอร์ สมุทรปราการ', nameEn: 'Toyota Motor Samut Prakan', provinceId: '2', lat: 13.5990, lng: 100.5998, abbr: 'TYT', color: '#10b981', logoUrl: 'https://www.google.com/s2/favicons?domain=toyota.com&sz=128' },
+  { id: '3', name: 'ฮอนด้า ออโตโมบิล ปทุมธานี', nameEn: 'Honda Automobile Pathum Thani', provinceId: '3', lat: 14.0208, lng: 100.5250, abbr: 'HND', color: '#8b5cf6', logoUrl: 'https://www.google.com/s2/favicons?domain=honda.com&sz=128' },
   // Eastern
-  { id: '4', name: 'โรงงาน ชลบุรี', nameEn: 'Chonburi Factory', provinceId: '4', lat: 13.3611, lng: 100.9847 },
-  { id: '5', name: 'โรงงาน ระยอง A', nameEn: 'Rayong Factory A', provinceId: '5', lat: 12.6814, lng: 101.2816 },
-  { id: '6', name: 'โรงงาน ระยอง B', nameEn: 'Rayong Factory B', provinceId: '5', lat: 12.7100, lng: 101.3200 },
+  { id: '4', name: 'บีเอ็มดับเบิลยู แมนูแฟคเจอริ่ง ชลบุรี', nameEn: 'BMW Manufacturing Chonburi', provinceId: '4', lat: 13.3611, lng: 100.9847, abbr: 'BMW', color: '#f59e0b', logoUrl: 'https://www.google.com/s2/favicons?domain=bmw.com&sz=128' },
+  { id: '5', name: 'ปตท. โกลบอล เคมิคอล ระยอง', nameEn: 'PTT Global Chemical Rayong', provinceId: '5', lat: 12.6814, lng: 101.2816, abbr: 'PTT', color: '#ef4444', logoUrl: 'https://www.google.com/s2/favicons?domain=shell.com&sz=128' },
+  { id: '6', name: 'แซมซุง อิเล็กทรอนิกส์ ระยอง', nameEn: 'Samsung Electronics Rayong', provinceId: '5', lat: 12.7100, lng: 101.3200, abbr: 'SSG', color: '#ec4899', logoUrl: 'https://www.google.com/s2/favicons?domain=samsung.com&sz=128' },
   // Northern
-  { id: '7', name: 'โรงงาน เชียงใหม่', nameEn: 'Chiang Mai Factory', provinceId: '6', lat: 18.7883, lng: 98.9853 },
-  { id: '8', name: 'โรงงาน ลำพูน', nameEn: 'Lamphun Factory', provinceId: '7', lat: 18.5744, lng: 99.0087 },
+  { id: '7', name: 'ซีพี ออลล์ เชียงใหม่', nameEn: 'CP All Chiang Mai', provinceId: '6', lat: 18.7883, lng: 98.9853, abbr: 'CP', color: '#06b6d4', logoUrl: 'https://www.google.com/s2/favicons?domain=microsoft.com&sz=128' },
+  { id: '8', name: 'ฮานา ไมโครอิเล็กทรอนิกส์ ลำพูน', nameEn: 'Hana Microelectronics Lamphun', provinceId: '7', lat: 18.5744, lng: 99.0087, abbr: 'HNM', color: '#84cc16', logoUrl: 'https://www.google.com/s2/favicons?domain=apple.com&sz=128' },
   // Southern
-  { id: '9', name: 'โรงงาน สงขลา', nameEn: 'Songkhla Factory', provinceId: '8', lat: 7.1896, lng: 100.5945 },
-  { id: '10', name: 'โรงงาน สุราษฎร์ธานี', nameEn: 'Surat Thani Factory', provinceId: '9', lat: 9.1382, lng: 99.3217 },
+  { id: '9', name: 'ไทยยูเนี่ยน กรุ๊ป สงขลา', nameEn: 'Thai Union Group Songkhla', provinceId: '8', lat: 7.1896, lng: 100.5945, abbr: 'TU', color: '#14b8a6', logoUrl: 'https://www.google.com/s2/favicons?domain=amazon.com&sz=128' },
+  { id: '10', name: 'เชฟรอน สุราษฎร์ธานี', nameEn: 'Chevron Surat Thani', provinceId: '9', lat: 9.1382, lng: 99.3217, abbr: 'CVX', color: '#6366f1', logoUrl: 'https://www.google.com/s2/favicons?domain=chevron.com&sz=128' },
   // Northeastern
-  { id: '11', name: 'โรงงาน นครราชสีมา', nameEn: 'Nakhon Ratchasima Factory', provinceId: '10', lat: 14.9798, lng: 102.0978 },
-  { id: '12', name: 'โรงงาน ขอนแก่น', nameEn: 'Khon Kaen Factory', provinceId: '11', lat: 16.4419, lng: 102.8360 },
+  { id: '11', name: 'ซีพีเอฟ นครราชสีมา', nameEn: 'CPF Nakhon Ratchasima', provinceId: '10', lat: 14.9798, lng: 102.0978, abbr: 'CPF', color: '#d946ef', logoUrl: 'https://www.google.com/s2/favicons?domain=nvidia.com&sz=128' },
+  { id: '12', name: 'มิตรผล ขอนแก่น', nameEn: 'Mitr Phol Khon Kaen', provinceId: '11', lat: 16.4419, lng: 102.8360, abbr: 'MPL', color: '#f97316', logoUrl: 'https://www.google.com/s2/favicons?domain=google.com&sz=128' },
 ];
 
 // Helper: get provinces by region
