@@ -21,14 +21,23 @@ import {
 } from "lucide-react"
 
 const ALL_MENU_ITEMS = [
-  { icon: LineChart, href: "/dashboard", roles: ['SUPER_ADMIN', 'ADMIN'], labelEn: 'Dashboard', labelTh: 'แดชบอร์ด' },
-  { icon: Flag, href: "/visit", roles: ['SUPER_ADMIN', 'ADMIN'], labelEn: 'Visitors', labelTh: 'ภารกิจเยี่ยมชม' },
-  { icon: ShieldCheck, href: "/guard", roles: ['SUPER_ADMIN', 'ADMIN'], labelEn: 'Security Staff', labelTh: 'รปภ.' },
-  { icon: ArrowLeftRight, href: "/history", roles: ['SUPER_ADMIN', 'ADMIN'], labelEn: 'History', labelTh: 'ประวัติเข้าออก' },
-  { icon: GitBranch, href: "/department", roles: ['SUPER_ADMIN', 'ADMIN'], labelEn: 'Departments', labelTh: 'แผนก' },
-  { icon: Home, href: "/factory", roles: ['SUPER_ADMIN'], labelEn: 'Factories', labelTh: 'โรงงาน' },
-  { icon: AtSign, href: "/brand", roles: ['SUPER_ADMIN'], labelEn: 'Brands', labelTh: 'แบรนด์' },
-  { icon: User, href: "/admin", roles: ['SUPER_ADMIN', 'ADMIN'], labelEn: 'Admins', labelTh: 'ผู้ดูแลระบบ' },
+  // Super Admin Items
+  { icon: LineChart, href: "/super-admin/dashboard", roles: ['SUPER_ADMIN'], labelEn: 'Dashboard', labelTh: 'แดชบอร์ด' },
+  { icon: Home, href: "/super-admin/factory", roles: ['SUPER_ADMIN'], labelEn: 'Factories', labelTh: 'โรงงาน' },
+  { icon: AtSign, href: "/super-admin/brand", roles: ['SUPER_ADMIN'], labelEn: 'Brands', labelTh: 'แบรนด์' },
+  { icon: User, href: "/super-admin/accounts", roles: ['SUPER_ADMIN'], labelEn: 'Admin Accounts', labelTh: 'บัญชีผู้ดูแล' },
+  { icon: Flag, href: "/super-admin/visit", roles: ['SUPER_ADMIN'], labelEn: 'Visitors', labelTh: 'ภารกิจเยี่ยมชม' },
+  { icon: ShieldCheck, href: "/super-admin/guard", roles: ['SUPER_ADMIN'], labelEn: 'Security Staff', labelTh: 'รปภ.' },
+  { icon: GitBranch, href: "/super-admin/department", roles: ['SUPER_ADMIN'], labelEn: 'Departments', labelTh: 'แผนก' },
+  { icon: ArrowLeftRight, href: "/super-admin/history", roles: ['SUPER_ADMIN'], labelEn: 'History', labelTh: 'ประวัติเข้าออก' },
+
+  // Admin Items
+  { icon: LineChart, href: "/admin/dashboard", roles: ['ADMIN'], labelEn: 'Dashboard', labelTh: 'แดชบอร์ด' },
+  { icon: Flag, href: "/admin/visit", roles: ['ADMIN'], labelEn: 'Visitors', labelTh: 'ภารกิจเยี่ยมชม' },
+  { icon: ShieldCheck, href: "/admin/guard", roles: ['ADMIN'], labelEn: 'Security Staff', labelTh: 'รปภ.' },
+  { icon: GitBranch, href: "/admin/department", roles: ['ADMIN'], labelEn: 'Departments', labelTh: 'แผนก' },
+  { icon: User, href: "/admin/accounts", roles: ['ADMIN'], labelEn: 'Admin Accounts', labelTh: 'บัญชีผู้ดูแล' },
+  { icon: ArrowLeftRight, href: "/admin/history", roles: ['ADMIN'], labelEn: 'History', labelTh: 'ประวัติเข้าออก' },
 ]
 
 export function Sidebar() {
